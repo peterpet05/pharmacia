@@ -1,7 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pharmacia/login_page.dart';
+import 'package:pharmacia/login_register/login_page.dart';
 
+class CustomAlertDialogImg extends StatelessWidget {
+  final String imagesUrl;
+
+  CustomAlertDialogImg({required this.imagesUrl});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              icon: Icon(Icons.close, size: 20, color: Colors.black.withOpacity(0.5),),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
+            child: Image.asset(imagesUrl),
+          ),
+          SizedBox(height: 20.0),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFF4682A9),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              minimumSize: Size(175, 44),
+            ),
+            child: Text(
+              'Login Now',
+              style: GoogleFonts.inter(
+                textStyle: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 10.0),
+        ],
+      ),
+    );
+  }
+}
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key});
@@ -18,6 +78,17 @@ class _RegisterPageState extends State<RegisterPage> {
   void dispose() {
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _showRegisterConfirmationDialogImg(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomAlertDialogImg(
+          imagesUrl: 'assets/RegisterComplete.png',
+        );
+      },
+    );
   }
 
   @override
@@ -145,7 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             filled:true,
                             fillColor: Color(0xFFF6F4EB),
                             suffixIcon: IconButton(
-                              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Color(0xFF5C5959).withOpacity(0.5)),
                               onPressed: () {
                                 setState(() {
                                   _isPasswordVisible = !_isPasswordVisible;
@@ -159,11 +230,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Center(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                            );
+                            _showRegisterConfirmationDialogImg(context);
                           },
                           child: Container(
                             width: 120,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pharmacia/main_screen.dart';
-import 'package:pharmacia/register_page.dart';
+import 'package:pharmacia/login_register/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                               filled:true,
                               fillColor: Color(0xFFF6F4EB),
                               suffixIcon: IconButton(
-                              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off, color: Color(0xFF5C5959).withOpacity(0.5)),
                               onPressed: () {
                                 setState(() {
                                   _isPasswordVisible = !_isPasswordVisible;
@@ -144,14 +144,15 @@ class _LoginPageState extends State<LoginPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                              Checkbox(
-                                value: _rememberMe,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    _rememberMe = value ?? false;
-                                  });
-                                },
-                              ),
+                                Switch(
+                                  value: _rememberMe,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _rememberMe = value;
+                                    });
+                                  },
+                                  activeColor: Color(0xFF4682A9),
+                                ),
                               Text(
                                 "Remember me",
                                 style: GoogleFonts.inter(
